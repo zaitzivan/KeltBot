@@ -30,7 +30,7 @@ def calculate_keltner_channel(df, length=20, scalar=1.5):
     df['ATR'] = df['TR'].ewm(span=length, adjust=False).mean()
     df['Upper'] = df['EMA'] + scalar * df['ATR']
     df['Lower'] = df['EMA'] - scalar * df['ATR']
-    return df.iloc[-1]['Upper'], df.iloc[-1]['EMA'], df.iloc[-1]['Lower']
+    return df.iloc[-1]['Upper'].item(), df.iloc[-1]['EMA'].item(), df.iloc[-1]['Lower'].item()
 
 def get_keltner_values(ticker="^GSPC", interval="1h"):
     df = yf.download(ticker, period="7d", interval=interval)
