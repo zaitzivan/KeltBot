@@ -37,30 +37,42 @@ def get_keltner_values(ticker="^GSPC", interval="1h"):
     if df.empty or len(df) < 20:
         return None
     try:
-        top, mid, bot = calculate_keltner_channel(df)
-        return round(top, 2), round(mid, 2), round(bot, 2)
+        return calculate_keltner_channel(df)
     except:
         return None
 
 @app.event("message")
 def handle_kelt_command(event, say):
-    print("Received a message:", event)
-    text = event.get("text", "")
-    if "!kelt" in text.lower():
-    parts = text.strip().split()
-    if len(parts) > 1:
-        ticker = parts[1].upper()
-    else:
-        ticker = "^GSPC"  # default to SPX if none provided
+    text = event.get("text", "").strip()
 
-    response = f"*Keltner Channel Levels for ${ticker}:*\n"
-    for label, interval in timeframes.items():
-        values = get_keltner_values(ticker, interval)
+    if text.lower().startswith("!kelt"):
+        parts = text.split()
+        ticker = parts[1].upper() if len(parts) > 1 else "^GSPC"
+
+        response = f"*Keltner Channel Levels for ${ticker}:*
+"
+
+        for label, interval in timeframes.items():
+            values = get_keltner_values(ticker, interval)
             if values:
                 top, mid, bot = values
-                response += f"\n*Time frame: {label}*\nTop Kelt: {top}\nMiddle Kelt: {mid}\nBottom Kelt: {bot}\n"
+                response += (
+                    f"
+*Time frame: {label}*
+"
+                    f"Top Kelt: {round(top, 2)}
+"
+                    f"Middle Kelt: {round(mid, 2)}
+"
+                    f"Bottom Kelt: {round(bot, 2)}
+"
+                )
             else:
-                response += f"\n*Time frame: {label}*\nCould not fetch data.\n"
+                response += f"
+*Time frame: {label}*
+Could not fetch data.
+"
+
         say(response)
 
 if __name__ == "__main__":
