@@ -1,0 +1,5 @@
+slack_bolt
+yfinance
+pandas
+numpy
+python-dotenv
