@@ -56,21 +56,13 @@ def handle_kelt_command(event, say):
             if values:
                 top, mid, bot = values
                 response += (
-                    f"
-*Time frame: {label}*
-"
-                    f"Top Kelt: {round(top, 2)}
-"
-                    f"Middle Kelt: {round(mid, 2)}
-"
-                    f"Bottom Kelt: {round(bot, 2)}
-"
+                    f"*Time frame: {label}*\n"
+                    f"Top Kelt: {round(top, 2)}\n"
+                    f"Middle Kelt: {round(mid, 2)}\n"
+                    f"Bottom Kelt: {round(bot, 2)}\n"
                 )
             else:
-                response += f"
-*Time frame: {label}*
-Could not fetch data.
-"
+                response += f"*Time frame: {label}*\nCould not fetch data.\n"
 
         say(response)
 
