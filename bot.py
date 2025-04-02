@@ -15,9 +15,9 @@ app = App(token=SLACK_BOT_TOKEN)
 
 timeframes = {
     "5 minutes": "5m",
+    "15 minutes": "15m",
     "30 minutes": "30m",
-    "1 hour": "60m",
-    "daily": "1d"
+    "1 hour": "60m"
 }
 
 def calculate_keltner_channel(df, length=20, scalar=1.5):
