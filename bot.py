@@ -47,9 +47,15 @@ def handle_kelt_command(event, say):
     print("Received a message:", event)
     text = event.get("text", "")
     if "!kelt" in text.lower():
-        response = "*Keltner Channel Levels for $SPX:*\n"
-        for label, interval in timeframes.items():
-            values = get_keltner_values("^GSPC", interval)
+    parts = text.strip().split()
+    if len(parts) > 1:
+        ticker = parts[1].upper()
+    else:
+        ticker = "^GSPC"  # default to SPX if none provided
+
+    response = f"*Keltner Channel Levels for ${ticker}:*\n"
+    for label, interval in timeframes.items():
+        values = get_keltner_values(ticker, interval)
             if values:
                 top, mid, bot = values
                 response += f"\n*Time frame: {label}*\nTop Kelt: {top}\nMiddle Kelt: {mid}\nBottom Kelt: {bot}\n"
