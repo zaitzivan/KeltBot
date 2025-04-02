@@ -50,7 +50,6 @@ def handle_kelt_command(event, say):
         ticker = parts[1].upper() if len(parts) > 1 else "^GSPC"
 
         response = f"*Keltner Channel Levels for ${ticker}:*\n"
-"
 
         for label, interval in timeframes.items():
             values = get_keltner_values(ticker, interval)
